@@ -1,20 +1,20 @@
 import { useState } from "react";
 
-export default function Player({ initialName, symbol }) {
+export default function Player({ initialName, symbol, isActive }) {
   // When we call use state - we set initial value - we get back an array with exactly 2 values -
   // we use array destructuring to store those two values in separate constants
-  const [playerName, setPlayerName] = useState(initialName)
+  const [playerName, setPlayerName] = useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
 
   function handleEditClick() {
     // If you are updating your state based on the previous version of your state you should pass in a function
     // When you are changing the state setIsEditing(!isEditing) -> state update is scheduled - not instantly updated.
-    setIsEditing(editing => !editing);
+    setIsEditing((editing) => !editing);
   }
 
   // React gives us even tobject automatically
   function handleChange(event) {
-    setPlayerName(event.target.value)
+    setPlayerName(event.target.value);
   }
 
   // You can store JSX code in a variable
@@ -23,12 +23,14 @@ export default function Player({ initialName, symbol }) {
   let btnCaption = "Edit";
 
   if (isEditing) {
-    editablePlayerName = <input type="text" required value={playerName} onChange={handleChange}/>;
+    editablePlayerName = (
+      <input type="text" required value={playerName} onChange={handleChange} />
+    );
     btnCaption = "Save";
   }
 
   return (
-    <li>
+    <li className={isActive ? "active" : undefined}>
       <span className="player">
         {editablePlayerName}
         <span className="player-symbol">{symbol}</span>
