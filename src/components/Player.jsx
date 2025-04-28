@@ -1,6 +1,11 @@
 import { useState } from "react";
 
-export default function Player({ initialName, symbol, isActive }) {
+export default function Player({
+  initialName,
+  symbol,
+  isActive,
+  onChangeName,
+}) {
   // When we call use state - we set initial value - we get back an array with exactly 2 values -
   // we use array destructuring to store those two values in separate constants
   const [playerName, setPlayerName] = useState(initialName);
@@ -10,6 +15,10 @@ export default function Player({ initialName, symbol, isActive }) {
     // If you are updating your state based on the previous version of your state you should pass in a function
     // When you are changing the state setIsEditing(!isEditing) -> state update is scheduled - not instantly updated.
     setIsEditing((editing) => !editing);
+
+    if (isEditing) {
+      onChangeName(symbol, playerName);
+    }
   }
 
   // React gives us even tobject automatically
